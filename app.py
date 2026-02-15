@@ -1309,145 +1309,141 @@ RESULT_PAGE = """
 def home():
     return render_template_string(HTML_PAGE)
 
-BIBI_PAGE = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Talk to Bibi</title>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;font-family:'Assistant','Segoe UI',sans-serif;background:linear-gradient(135deg,#0038b8 0%,#0038b8 40%,#fff 40%,#fff 60%,#0038b8 60%,#0038b8 100%);display:flex;flex-direction:column;align-items:center;justify-content:center}
-.chat-container{width:100%;max-width:640px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.3);overflow:hidden;display:flex;flex-direction:column;height:85vh}
-.chat-header{background:linear-gradient(135deg,#0038b8,#002d8f);padding:20px 24px;display:flex;align-items:center;gap:16px;border-bottom:4px solid #f4c430}
-.chat-avatar{width:56px;height:56px;border-radius:50%;background:#f4c430;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;border:3px solid #fff}
-.chat-header-text h1{font-family:'Frank Ruhl Libre',Georgia,serif;color:#fff;font-size:22px;font-weight:900;margin-bottom:2px}
-.chat-header-text p{color:rgba(255,255,255,0.7);font-size:13px}
-.star-of-david{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:32px;color:rgba(255,255,255,0.15)}
-.chat-header{position:relative}
-.messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;background:#f8f9fc}
-.msg{max-width:80%;padding:12px 16px;border-radius:12px;font-size:14px;line-height:1.6;animation:msgIn .3s ease-out}
-@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.msg.bot{background:linear-gradient(135deg,#e8ecf8,#dce3f5);color:#1a1a2e;align-self:flex-start;border-bottom-left-radius:4px;border:1px solid rgba(0,56,184,0.1)}
-.msg.user{background:linear-gradient(135deg,#0038b8,#0045d4);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.msg.bot .sender{font-size:10px;font-weight:700;color:#0038b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-.msg.bot .sender::before{content:'\\2721 ';font-size:11px}
-.input-area{padding:16px 20px;background:#fff;border-top:2px solid #e8ecf5;display:flex;gap:10px;align-items:center}
-.input-area input{flex:1;padding:12px 16px;border:2px solid #dce3f5;border-radius:8px;font-size:14px;font-family:'Assistant',sans-serif;outline:none;transition:border .2s}
-.input-area input:focus{border-color:#0038b8}
-.input-area button{padding:12px 20px;background:linear-gradient(135deg,#0038b8,#0045d4);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Assistant',sans-serif;transition:all .2s;letter-spacing:0.5px}
-.input-area button:hover{background:linear-gradient(135deg,#002d8f,#0038b8);transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,56,184,0.3)}
-.input-area button:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.typing{display:flex;gap:4px;padding:8px 0}
-.typing span{width:6px;height:6px;background:#0038b8;border-radius:50%;animation:bounce .6s infinite alternate}
-.typing span:nth-child(2){animation-delay:.2s}
-.typing span:nth-child(3){animation-delay:.4s}
-@keyframes bounce{to{transform:translateY(-6px);opacity:.4}}
-.back-link{position:fixed;top:16px;left:16px;color:#fff;text-decoration:none;font-weight:700;font-size:14px;background:rgba(0,0,0,0.25);padding:8px 14px;border-radius:6px;backdrop-filter:blur(4px);transition:background .2s}
-.back-link:hover{background:rgba(0,0,0,0.4)}
-.welcome-flag{text-align:center;padding:8px;font-size:11px;color:#8a8fa8;letter-spacing:1px}
-@media (max-width:600px){
-    body{background:linear-gradient(180deg,#0038b8 0%,#0038b8 30%,#fff 30%,#fff 70%,#0038b8 70%,#0038b8 100%)}
-    .chat-container{margin:10px;height:calc(100vh - 20px);border-radius:10px}
-    .chat-header{padding:14px 16px;gap:12px}
-    .chat-avatar{width:42px;height:42px;font-size:20px}
-    .chat-header-text h1{font-size:18px}
-    .chat-header-text p{font-size:11px}
-    .star-of-david{font-size:24px;right:14px}
-    .messages{padding:14px 10px;gap:10px}
-    .msg{max-width:88%;padding:10px 13px;font-size:13px;line-height:1.5}
-    .msg.bot .sender{font-size:9px}
-    .input-area{padding:10px 12px;gap:8px}
-    .input-area input{padding:10px 12px;font-size:14px;border-radius:6px}
-    .input-area button{padding:10px 16px;font-size:13px;border-radius:6px}
-    .back-link{top:auto;bottom:8px;left:50%;transform:translateX(-50%);font-size:12px;padding:6px 12px;border-radius:20px;z-index:10}
-    .welcome-flag{font-size:10px;padding:6px}
-}
-</style>
-</head>
-<body>
-<a href="/" class="back-link">&larr; Back to InfoBait</a>
-<div class="chat-container">
-    <div class="chat-header">
-        <div class="chat-avatar">&#x1F1EE;&#x1F1F1;</div>
-        <div class="chat-header-text">
-            <h1>BIBI Chat</h1>
-            <p>Prime Minister of Israel &bull; AI Simulation</p>
-        </div>
-        <div class="star-of-david">&#x2721;</div>
-    </div>
-    <div class="messages" id="messages">
-        <div class="welcome-flag">&#x1F1EE;&#x1F1F1; Shalom! This is an AI simulation for entertainment purposes only. &#x1F1EE;&#x1F1F1;</div>
-        <div class="msg bot"><div class="sender">Bibi Netanyahu</div>Shalom! I am Benjamin Netanyahu. Ask me anything about Israel, politics, security, or the Middle East. I am always happy to talk.</div>
-    </div>
-    <div class="input-area">
-        <input type="text" id="userInput" placeholder="Type your message..." autocomplete="off">
-        <button id="sendBtn" onclick="sendMessage()">Send</button>
-    </div>
-</div>
-<script>
-var chatHistory = [];
-var input = document.getElementById('userInput');
-var msgs = document.getElementById('messages');
-var btn = document.getElementById('sendBtn');
-
-input.addEventListener('keydown', function(e){ if(e.key==='Enter'&&!btn.disabled) sendMessage(); });
-
-function addMsg(text, cls, sender){
-    var d = document.createElement('div');
-    d.className = 'msg '+cls;
-    if(sender) d.innerHTML = '<div class="sender">'+sender+'</div>'+text;
-    else d.textContent = text;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-}
-
-function showTyping(){
-    var d = document.createElement('div');
-    d.className = 'msg bot';
-    d.id = 'typing';
-    d.innerHTML = '<div class="sender">Bibi Netanyahu</div><div class="typing"><span></span><span></span><span></span></div>';
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-}
-
-function removeTyping(){
-    var t = document.getElementById('typing');
-    if(t) t.remove();
-}
-
-function sendMessage(){
-    var text = input.value.trim();
-    if(!text) return;
-    addMsg(text, 'user');
-    input.value = '';
-    btn.disabled = true;
-    chatHistory.push({role:'user', text:text});
-    showTyping();
-
-    fetch('/bibi-chat', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({message:text, history:chatHistory})
-    })
-    .then(function(r){return r.json()})
-    .then(function(data){
-        removeTyping();
-        addMsg(data.reply, 'bot', 'Bibi Netanyahu');
-        chatHistory.push({role:'bot', text:data.reply});
-        btn.disabled = false;
-        input.focus();
-    })
-    .catch(function(){
-        removeTyping();
-        addMsg('Connection error. Please try again.', 'bot', 'System');
-        btn.disabled = false;
-    });
-}
-</script>
-</body>
-</html>
-"""
+BIBI_PAGE = base64.b64decode(
+    "PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVU"
+    "Ri04Ij48bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLGlu"
+    "aXRpYWwtc2NhbGU9MS4wIj4KPHRpdGxlPlRhbGsgdG8gQmliaTwvdGl0bGU+CjxsaW5rIGhyZWY9"
+    "Imh0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9RnJhbmsrUnVobCtMaWJy"
+    "ZTp3Z2h0QDQwMDs3MDA7OTAwJmZhbWlseT1Bc3Npc3RhbnQ6d2dodEA0MDA7NjAwOzcwMCZkaXNw"
+    "bGF5PXN3YXAiIHJlbD0ic3R5bGVzaGVldCI+CjxzdHlsZT4KKntib3gtc2l6aW5nOmJvcmRlci1i"
+    "b3g7bWFyZ2luOjA7cGFkZGluZzowfQpib2R5e21pbi1oZWlnaHQ6MTAwdmg7Zm9udC1mYW1pbHk6"
+    "J0Fzc2lzdGFudCcsJ1NlZ29lIFVJJyxzYW5zLXNlcmlmO2JhY2tncm91bmQ6bGluZWFyLWdyYWRp"
+    "ZW50KDEzNWRlZywjMDAzOGI4IDAlLCMwMDM4YjggNDAlLCNmZmYgNDAlLCNmZmYgNjAlLCMwMDM4"
+    "YjggNjAlLCMwMDM4YjggMTAwJSk7ZGlzcGxheTpmbGV4O2ZsZXgtZGlyZWN0aW9uOmNvbHVtbjth"
+    "bGlnbi1pdGVtczpjZW50ZXI7anVzdGlmeS1jb250ZW50OmNlbnRlcn0KLmNoYXQtY29udGFpbmVy"
+    "e3dpZHRoOjEwMCU7bWF4LXdpZHRoOjY0MHB4O21hcmdpbjoyNHB4IGF1dG87YmFja2dyb3VuZDoj"
+    "ZmZmO2JvcmRlci1yYWRpdXM6MTJweDtib3gtc2hhZG93OjAgOHB4IDQwcHggcmdiYSgwLDAsMCww"
+    "LjMpO292ZXJmbG93OmhpZGRlbjtkaXNwbGF5OmZsZXg7ZmxleC1kaXJlY3Rpb246Y29sdW1uO2hl"
+    "aWdodDo4NXZofQouY2hhdC1oZWFkZXJ7YmFja2dyb3VuZDpsaW5lYXItZ3JhZGllbnQoMTM1ZGVn"
+    "LCMwMDM4YjgsIzAwMmQ4Zik7cGFkZGluZzoyMHB4IDI0cHg7ZGlzcGxheTpmbGV4O2FsaWduLWl0"
+    "ZW1zOmNlbnRlcjtnYXA6MTZweDtib3JkZXItYm90dG9tOjRweCBzb2xpZCAjZjRjNDMwfQouY2hh"
+    "dC1hdmF0YXJ7d2lkdGg6NTZweDtoZWlnaHQ6NTZweDtib3JkZXItcmFkaXVzOjUwJTtiYWNrZ3Jv"
+    "dW5kOiNmNGM0MzA7ZGlzcGxheTpmbGV4O2FsaWduLWl0ZW1zOmNlbnRlcjtqdXN0aWZ5LWNvbnRl"
+    "bnQ6Y2VudGVyO2ZvbnQtc2l6ZToyOHB4O2ZsZXgtc2hyaW5rOjA7Ym9yZGVyOjNweCBzb2xpZCAj"
+    "ZmZmfQouY2hhdC1oZWFkZXItdGV4dCBoMXtmb250LWZhbWlseTonRnJhbmsgUnVobCBMaWJyZScs"
+    "R2VvcmdpYSxzZXJpZjtjb2xvcjojZmZmO2ZvbnQtc2l6ZToyMnB4O2ZvbnQtd2VpZ2h0OjkwMDtt"
+    "YXJnaW4tYm90dG9tOjJweH0KLmNoYXQtaGVhZGVyLXRleHQgcHtjb2xvcjpyZ2JhKDI1NSwyNTUs"
+    "MjU1LDAuNyk7Zm9udC1zaXplOjEzcHh9Ci5zdGFyLW9mLWRhdmlke3Bvc2l0aW9uOmFic29sdXRl"
+    "O3JpZ2h0OjIwcHg7dG9wOjUwJTt0cmFuc2Zvcm06dHJhbnNsYXRlWSgtNTAlKTtmb250LXNpemU6"
+    "MzJweDtjb2xvcjpyZ2JhKDI1NSwyNTUsMjU1LDAuMTUpfQouY2hhdC1oZWFkZXJ7cG9zaXRpb246"
+    "cmVsYXRpdmV9Ci5tZXNzYWdlc3tmbGV4OjE7b3ZlcmZsb3cteTphdXRvO3BhZGRpbmc6MjBweDtk"
+    "aXNwbGF5OmZsZXg7ZmxleC1kaXJlY3Rpb246Y29sdW1uO2dhcDoxMnB4O2JhY2tncm91bmQ6I2Y4"
+    "ZjlmY30KLm1zZ3ttYXgtd2lkdGg6ODAlO3BhZGRpbmc6MTJweCAxNnB4O2JvcmRlci1yYWRpdXM6"
+    "MTJweDtmb250LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjY7YW5pbWF0aW9uOm1zZ0luIC4zcyBl"
+    "YXNlLW91dH0KQGtleWZyYW1lcyBtc2dJbntmcm9te29wYWNpdHk6MDt0cmFuc2Zvcm06dHJhbnNs"
+    "YXRlWSg4cHgpfXRve29wYWNpdHk6MTt0cmFuc2Zvcm06dHJhbnNsYXRlWSgwKX19Ci5tc2cuYm90"
+    "e2JhY2tncm91bmQ6bGluZWFyLWdyYWRpZW50KDEzNWRlZywjZThlY2Y4LCNkY2UzZjUpO2NvbG9y"
+    "OiMxYTFhMmU7YWxpZ24tc2VsZjpmbGV4LXN0YXJ0O2JvcmRlci1ib3R0b20tbGVmdC1yYWRpdXM6"
+    "NHB4O2JvcmRlcjoxcHggc29saWQgcmdiYSgwLDU2LDE4NCwwLjEpfQoubXNnLnVzZXJ7YmFja2dy"
+    "b3VuZDpsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCMwMDM4YjgsIzAwNDVkNCk7Y29sb3I6I2ZmZjth"
+    "bGlnbi1zZWxmOmZsZXgtZW5kO2JvcmRlci1ib3R0b20tcmlnaHQtcmFkaXVzOjRweH0KLm1zZy5i"
+    "b3QgLnNlbmRlcntmb250LXNpemU6MTBweDtmb250LXdlaWdodDo3MDA7Y29sb3I6IzAwMzhiODt0"
+    "ZXh0LXRyYW5zZm9ybTp1cHBlcmNhc2U7bGV0dGVyLXNwYWNpbmc6MXB4O21hcmdpbi1ib3R0b206"
+    "NHB4fQoubXNnLmJvdCAuc2VuZGVyOjpiZWZvcmV7Y29udGVudDonXFwyNzIxICc7Zm9udC1zaXpl"
+    "OjExcHh9Ci5pbnB1dC1hcmVhe3BhZGRpbmc6MTZweCAyMHB4O2JhY2tncm91bmQ6I2ZmZjtib3Jk"
+    "ZXItdG9wOjJweCBzb2xpZCAjZThlY2Y1O2Rpc3BsYXk6ZmxleDtnYXA6MTBweDthbGlnbi1pdGVt"
+    "czpjZW50ZXJ9Ci5pbnB1dC1hcmVhIGlucHV0e2ZsZXg6MTtwYWRkaW5nOjEycHggMTZweDtib3Jk"
+    "ZXI6MnB4IHNvbGlkICNkY2UzZjU7Ym9yZGVyLXJhZGl1czo4cHg7Zm9udC1zaXplOjE0cHg7Zm9u"
+    "dC1mYW1pbHk6J0Fzc2lzdGFudCcsc2Fucy1zZXJpZjtvdXRsaW5lOm5vbmU7dHJhbnNpdGlvbjpi"
+    "b3JkZXIgLjJzfQouaW5wdXQtYXJlYSBpbnB1dDpmb2N1c3tib3JkZXItY29sb3I6IzAwMzhiOH0K"
+    "LmlucHV0LWFyZWEgYnV0dG9ue3BhZGRpbmc6MTJweCAyMHB4O2JhY2tncm91bmQ6bGluZWFyLWdy"
+    "YWRpZW50KDEzNWRlZywjMDAzOGI4LCMwMDQ1ZDQpO2NvbG9yOiNmZmY7Ym9yZGVyOm5vbmU7Ym9y"
+    "ZGVyLXJhZGl1czo4cHg7Zm9udC1zaXplOjE0cHg7Zm9udC13ZWlnaHQ6NzAwO2N1cnNvcjpwb2lu"
+    "dGVyO2ZvbnQtZmFtaWx5OidBc3Npc3RhbnQnLHNhbnMtc2VyaWY7dHJhbnNpdGlvbjphbGwgLjJz"
+    "O2xldHRlci1zcGFjaW5nOjAuNXB4fQouaW5wdXQtYXJlYSBidXR0b246aG92ZXJ7YmFja2dyb3Vu"
+    "ZDpsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCMwMDJkOGYsIzAwMzhiOCk7dHJhbnNmb3JtOnRyYW5z"
+    "bGF0ZVkoLTFweCk7Ym94LXNoYWRvdzowIDJweCA4cHggcmdiYSgwLDU2LDE4NCwwLjMpfQouaW5w"
+    "dXQtYXJlYSBidXR0b246ZGlzYWJsZWR7b3BhY2l0eTouNTtjdXJzb3I6bm90LWFsbG93ZWQ7dHJh"
+    "bnNmb3JtOm5vbmV9Ci50eXBpbmd7ZGlzcGxheTpmbGV4O2dhcDo0cHg7cGFkZGluZzo4cHggMH0K"
+    "LnR5cGluZyBzcGFue3dpZHRoOjZweDtoZWlnaHQ6NnB4O2JhY2tncm91bmQ6IzAwMzhiODtib3Jk"
+    "ZXItcmFkaXVzOjUwJTthbmltYXRpb246Ym91bmNlIC42cyBpbmZpbml0ZSBhbHRlcm5hdGV9Ci50"
+    "eXBpbmcgc3BhbjpudGgtY2hpbGQoMil7YW5pbWF0aW9uLWRlbGF5Oi4yc30KLnR5cGluZyBzcGFu"
+    "Om50aC1jaGlsZCgzKXthbmltYXRpb24tZGVsYXk6LjRzfQpAa2V5ZnJhbWVzIGJvdW5jZXt0b3t0"
+    "cmFuc2Zvcm06dHJhbnNsYXRlWSgtNnB4KTtvcGFjaXR5Oi40fX0KLmJhY2stbGlua3twb3NpdGlv"
+    "bjpmaXhlZDt0b3A6MTZweDtsZWZ0OjE2cHg7Y29sb3I6I2ZmZjt0ZXh0LWRlY29yYXRpb246bm9u"
+    "ZTtmb250LXdlaWdodDo3MDA7Zm9udC1zaXplOjE0cHg7YmFja2dyb3VuZDpyZ2JhKDAsMCwwLDAu"
+    "MjUpO3BhZGRpbmc6OHB4IDE0cHg7Ym9yZGVyLXJhZGl1czo2cHg7YmFja2Ryb3AtZmlsdGVyOmJs"
+    "dXIoNHB4KTt0cmFuc2l0aW9uOmJhY2tncm91bmQgLjJzfQouYmFjay1saW5rOmhvdmVye2JhY2tn"
+    "cm91bmQ6cmdiYSgwLDAsMCwwLjQpfQoud2VsY29tZS1mbGFne3RleHQtYWxpZ246Y2VudGVyO3Bh"
+    "ZGRpbmc6OHB4O2ZvbnQtc2l6ZToxMXB4O2NvbG9yOiM4YThmYTg7bGV0dGVyLXNwYWNpbmc6MXB4"
+    "fQpAbWVkaWEgKG1heC13aWR0aDo2MDBweCl7CiAgICBib2R5e2JhY2tncm91bmQ6bGluZWFyLWdy"
+    "YWRpZW50KDE4MGRlZywjMDAzOGI4IDAlLCMwMDM4YjggMzAlLCNmZmYgMzAlLCNmZmYgNzAlLCMw"
+    "MDM4YjggNzAlLCMwMDM4YjggMTAwJSl9CiAgICAuY2hhdC1jb250YWluZXJ7bWFyZ2luOjEwcHg7"
+    "aGVpZ2h0OmNhbGMoMTAwdmggLSAyMHB4KTtib3JkZXItcmFkaXVzOjEwcHh9CiAgICAuY2hhdC1o"
+    "ZWFkZXJ7cGFkZGluZzoxNHB4IDE2cHg7Z2FwOjEycHh9CiAgICAuY2hhdC1hdmF0YXJ7d2lkdGg6"
+    "NDJweDtoZWlnaHQ6NDJweDtmb250LXNpemU6MjBweH0KICAgIC5jaGF0LWhlYWRlci10ZXh0IGgx"
+    "e2ZvbnQtc2l6ZToxOHB4fQogICAgLmNoYXQtaGVhZGVyLXRleHQgcHtmb250LXNpemU6MTFweH0K"
+    "ICAgIC5zdGFyLW9mLWRhdmlke2ZvbnQtc2l6ZToyNHB4O3JpZ2h0OjE0cHh9CiAgICAubWVzc2Fn"
+    "ZXN7cGFkZGluZzoxNHB4IDEwcHg7Z2FwOjEwcHh9CiAgICAubXNne21heC13aWR0aDo4OCU7cGFk"
+    "ZGluZzoxMHB4IDEzcHg7Zm9udC1zaXplOjEzcHg7bGluZS1oZWlnaHQ6MS41fQogICAgLm1zZy5i"
+    "b3QgLnNlbmRlcntmb250LXNpemU6OXB4fQogICAgLmlucHV0LWFyZWF7cGFkZGluZzoxMHB4IDEy"
+    "cHg7Z2FwOjhweH0KICAgIC5pbnB1dC1hcmVhIGlucHV0e3BhZGRpbmc6MTBweCAxMnB4O2ZvbnQt"
+    "c2l6ZToxNHB4O2JvcmRlci1yYWRpdXM6NnB4fQogICAgLmlucHV0LWFyZWEgYnV0dG9ue3BhZGRp"
+    "bmc6MTBweCAxNnB4O2ZvbnQtc2l6ZToxM3B4O2JvcmRlci1yYWRpdXM6NnB4fQogICAgLmJhY2st"
+    "bGlua3t0b3A6YXV0bztib3R0b206OHB4O2xlZnQ6NTAlO3RyYW5zZm9ybTp0cmFuc2xhdGVYKC01"
+    "MCUpO2ZvbnQtc2l6ZToxMnB4O3BhZGRpbmc6NnB4IDEycHg7Ym9yZGVyLXJhZGl1czoyMHB4O3ot"
+    "aW5kZXg6MTB9CiAgICAud2VsY29tZS1mbGFne2ZvbnQtc2l6ZToxMHB4O3BhZGRpbmc6NnB4fQp9"
+    "Cjwvc3R5bGU+CjwvaGVhZD4KPGJvZHk+CjxhIGhyZWY9Ii8iIGNsYXNzPSJiYWNrLWxpbmsiPiZs"
+    "YXJyOyBCYWNrIHRvIEluZm9CYWl0PC9hPgo8ZGl2IGNsYXNzPSJjaGF0LWNvbnRhaW5lciI+CiAg"
+    "ICA8ZGl2IGNsYXNzPSJjaGF0LWhlYWRlciI+CiAgICAgICAgPGRpdiBjbGFzcz0iY2hhdC1hdmF0"
+    "YXIiPiYjeDFGMUVFOyYjeDFGMUYxOzwvZGl2PgogICAgICAgIDxkaXYgY2xhc3M9ImNoYXQtaGVh"
+    "ZGVyLXRleHQiPgogICAgICAgICAgICA8aDE+QklCSSBDaGF0PC9oMT4KICAgICAgICAgICAgPHA+"
+    "UHJpbWUgTWluaXN0ZXIgb2YgSXNyYWVsICZidWxsOyBBSSBTaW11bGF0aW9uPC9wPgogICAgICAg"
+    "IDwvZGl2PgogICAgICAgIDxkaXYgY2xhc3M9InN0YXItb2YtZGF2aWQiPiYjeDI3MjE7PC9kaXY+"
+    "CiAgICA8L2Rpdj4KICAgIDxkaXYgY2xhc3M9Im1lc3NhZ2VzIiBpZD0ibWVzc2FnZXMiPgogICAg"
+    "ICAgIDxkaXYgY2xhc3M9IndlbGNvbWUtZmxhZyI+JiN4MUYxRUU7JiN4MUYxRjE7IFNoYWxvbSEg"
+    "VGhpcyBpcyBhbiBBSSBzaW11bGF0aW9uIGZvciBlbnRlcnRhaW5tZW50IHB1cnBvc2VzIG9ubHku"
+    "ICYjeDFGMUVFOyYjeDFGMUYxOzwvZGl2PgogICAgICAgIDxkaXYgY2xhc3M9Im1zZyBib3QiPjxk"
+    "aXYgY2xhc3M9InNlbmRlciI+QmliaSBOZXRhbnlhaHU8L2Rpdj5TaGFsb20hIEkgYW0gQmVuamFt"
+    "aW4gTmV0YW55YWh1LiBBc2sgbWUgYW55dGhpbmcgYWJvdXQgSXNyYWVsLCBwb2xpdGljcywgc2Vj"
+    "dXJpdHksIG9yIHRoZSBNaWRkbGUgRWFzdC4gSSBhbSBhbHdheXMgaGFwcHkgdG8gdGFsay48L2Rp"
+    "dj4KICAgIDwvZGl2PgogICAgPGRpdiBjbGFzcz0iaW5wdXQtYXJlYSI+CiAgICAgICAgPGlucHV0"
+    "IHR5cGU9InRleHQiIGlkPSJ1c2VySW5wdXQiIHBsYWNlaG9sZGVyPSJUeXBlIHlvdXIgbWVzc2Fn"
+    "ZS4uLiIgYXV0b2NvbXBsZXRlPSJvZmYiPgogICAgICAgIDxidXR0b24gaWQ9InNlbmRCdG4iIG9u"
+    "Y2xpY2s9InNlbmRNZXNzYWdlKCkiPlNlbmQ8L2J1dHRvbj4KICAgIDwvZGl2Pgo8L2Rpdj4KPHNj"
+    "cmlwdD4KdmFyIGNoYXRIaXN0b3J5ID0gW107CnZhciBpbnB1dCA9IGRvY3VtZW50LmdldEVsZW1l"
+    "bnRCeUlkKCd1c2VySW5wdXQnKTsKdmFyIG1zZ3MgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgn"
+    "bWVzc2FnZXMnKTsKdmFyIGJ0biA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzZW5kQnRuJyk7"
+    "CgppbnB1dC5hZGRFdmVudExpc3RlbmVyKCdrZXlkb3duJywgZnVuY3Rpb24oZSl7IGlmKGUua2V5"
+    "PT09J0VudGVyJyYmIWJ0bi5kaXNhYmxlZCkgc2VuZE1lc3NhZ2UoKTsgfSk7CgpmdW5jdGlvbiBh"
+    "ZGRNc2codGV4dCwgY2xzLCBzZW5kZXIpewogICAgdmFyIGQgPSBkb2N1bWVudC5jcmVhdGVFbGVt"
+    "ZW50KCdkaXYnKTsKICAgIGQuY2xhc3NOYW1lID0gJ21zZyAnK2NsczsKICAgIGlmKHNlbmRlcikg"
+    "ZC5pbm5lckhUTUwgPSAnPGRpdiBjbGFzcz0ic2VuZGVyIj4nK3NlbmRlcisnPC9kaXY+Jyt0ZXh0"
+    "OwogICAgZWxzZSBkLnRleHRDb250ZW50ID0gdGV4dDsKICAgIG1zZ3MuYXBwZW5kQ2hpbGQoZCk7"
+    "CiAgICBtc2dzLnNjcm9sbFRvcCA9IG1zZ3Muc2Nyb2xsSGVpZ2h0Owp9CgpmdW5jdGlvbiBzaG93"
+    "VHlwaW5nKCl7CiAgICB2YXIgZCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpOwogICAg"
+    "ZC5jbGFzc05hbWUgPSAnbXNnIGJvdCc7CiAgICBkLmlkID0gJ3R5cGluZyc7CiAgICBkLmlubmVy"
+    "SFRNTCA9ICc8ZGl2IGNsYXNzPSJzZW5kZXIiPkJpYmkgTmV0YW55YWh1PC9kaXY+PGRpdiBjbGFz"
+    "cz0idHlwaW5nIj48c3Bhbj48L3NwYW4+PHNwYW4+PC9zcGFuPjxzcGFuPjwvc3Bhbj48L2Rpdj4n"
+    "OwogICAgbXNncy5hcHBlbmRDaGlsZChkKTsKICAgIG1zZ3Muc2Nyb2xsVG9wID0gbXNncy5zY3Jv"
+    "bGxIZWlnaHQ7Cn0KCmZ1bmN0aW9uIHJlbW92ZVR5cGluZygpewogICAgdmFyIHQgPSBkb2N1bWVu"
+    "dC5nZXRFbGVtZW50QnlJZCgndHlwaW5nJyk7CiAgICBpZih0KSB0LnJlbW92ZSgpOwp9CgpmdW5j"
+    "dGlvbiBzZW5kTWVzc2FnZSgpewogICAgdmFyIHRleHQgPSBpbnB1dC52YWx1ZS50cmltKCk7CiAg"
+    "ICBpZighdGV4dCkgcmV0dXJuOwogICAgYWRkTXNnKHRleHQsICd1c2VyJyk7CiAgICBpbnB1dC52"
+    "YWx1ZSA9ICcnOwogICAgYnRuLmRpc2FibGVkID0gdHJ1ZTsKICAgIGNoYXRIaXN0b3J5LnB1c2go"
+    "e3JvbGU6J3VzZXInLCB0ZXh0OnRleHR9KTsKICAgIHNob3dUeXBpbmcoKTsKCiAgICBmZXRjaCgn"
+    "L2JpYmktY2hhdCcsIHsKICAgICAgICBtZXRob2Q6J1BPU1QnLAogICAgICAgIGhlYWRlcnM6eydD"
+    "b250ZW50LVR5cGUnOidhcHBsaWNhdGlvbi9qc29uJ30sCiAgICAgICAgYm9keTpKU09OLnN0cmlu"
+    "Z2lmeSh7bWVzc2FnZTp0ZXh0LCBoaXN0b3J5OmNoYXRIaXN0b3J5fSkKICAgIH0pCiAgICAudGhl"
+    "bihmdW5jdGlvbihyKXtyZXR1cm4gci5qc29uKCl9KQogICAgLnRoZW4oZnVuY3Rpb24oZGF0YSl7"
+    "CiAgICAgICAgcmVtb3ZlVHlwaW5nKCk7CiAgICAgICAgYWRkTXNnKGRhdGEucmVwbHksICdib3Qn"
+    "LCAnQmliaSBOZXRhbnlhaHUnKTsKICAgICAgICBjaGF0SGlzdG9yeS5wdXNoKHtyb2xlOidib3Qn"
+    "LCB0ZXh0OmRhdGEucmVwbHl9KTsKICAgICAgICBidG4uZGlzYWJsZWQgPSBmYWxzZTsKICAgICAg"
+    "ICBpbnB1dC5mb2N1cygpOwogICAgfSkKICAgIC5jYXRjaChmdW5jdGlvbigpewogICAgICAgIHJl"
+    "bW92ZVR5cGluZygpOwogICAgICAgIGFkZE1zZygnQ29ubmVjdGlvbiBlcnJvci4gUGxlYXNlIHRy"
+    "eSBhZ2Fpbi4nLCAnYm90JywgJ1N5c3RlbScpOwogICAgICAgIGJ0bi5kaXNhYmxlZCA9IGZhbHNl"
+    "OwogICAgfSk7Cn0KPC9zY3JpcHQ+CjwvYm9keT4KPC9odG1sPgo="
+).decode("utf-8")
 
 @app.route("/bibi")
 def bibi_page():
