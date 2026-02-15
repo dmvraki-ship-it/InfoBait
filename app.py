@@ -145,6 +145,34 @@ HTML_PAGE = """
         .sidebar-quote-attr{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-top:6px;text-align:right;font-style:normal}
         .right-sidebar{width:220px;flex-shrink:0;animation:fadeUp .5s ease-out both;animation-delay:.25s}
         @media (max-width:1100px){.sidebar,.right-sidebar{display:none}}
+        @media (max-width:600px){
+            body{padding-top:54px}
+            .top-banner{padding:8px 14px}
+            .logo-text{font-size:24px}
+            .banner-date{font-size:8px}
+            .settings-btn{width:36px;height:36px;font-size:16px}
+            .settings-dropdown{top:52px;right:10px;width:calc(100vw - 20px);max-width:320px}
+            .wrap{padding:16px 10px}
+            .card{padding:20px 14px 18px}
+            .card:hover{transform:none;box-shadow:0 4px 24px rgba(0,0,0,0.25),0 1px 4px rgba(0,0,0,0.15)}
+            h1{font-size:22px;min-height:unset}
+            p.lead{font-size:13px;min-height:unset;margin-bottom:14px}
+            form{flex-direction:column;gap:10px}
+            .file-input{padding:10px 12px}
+            .file-input input[type=file]::file-selector-button,.file-input input[type=file]::-webkit-file-upload-button{padding:6px 12px;font-size:10px}
+            .btn{width:100%;padding:12px;font-size:12px}
+            .meta{flex-direction:column;align-items:stretch;gap:10px;margin-top:14px}
+            .preview{width:100%;height:auto;max-height:180px}
+            .note{font-size:12px}
+            footer{font-size:10px;margin-top:14px}
+            .faq-overlay{padding:12px}
+            .faq-modal{padding:18px;max-height:85vh}
+            .faq-header h2{font-size:16px;letter-spacing:2px}
+            .faq-q{font-size:13px;padding:12px 4px}
+            .faq-a p{font-size:12px}
+            .edition-line{font-size:9px;letter-spacing:3px}
+            .page-footer .footer-logo{font-size:22px}
+        }
         .page-footer{background:#111;border-top:3px double rgba(255,255,255,0.2);padding:24px 28px;text-align:center;margin-top:auto}
         :root.light .page-footer{background:#1a1a18;border-top:3px double rgba(255,255,255,0.15)}
         .page-footer .footer-logo{font-family:'UnifrakturMaguntia','Playfair Display',Georgia,serif;font-size:28px;color:#fff;text-decoration:none;letter-spacing:2px;transition:opacity .25s}
@@ -724,6 +752,39 @@ RESULT_PAGE = """
         :root.light .tts-btn.tts-active{background:var(--accent);border-color:var(--accent);color:#fff}
         :root.light .tts-btn.tts-active:hover{background:#8a1515}
         @media (max-width:820px){.row{flex-direction:column}.left{width:100%}.right{border-left:none;padding-left:0;border-top:1px solid var(--border);padding-top:20px}}
+        @media (max-width:600px){
+            body{padding-top:54px}
+            .top-banner{padding:8px 14px}
+            .logo-text{font-size:24px}
+            .banner-date{font-size:8px}
+            .settings-btn{width:36px;height:36px;font-size:16px}
+            .settings-dropdown{top:52px;right:10px;width:calc(100vw - 20px);max-width:320px}
+            .wrap{padding:14px 8px}
+            .card{padding:18px 12px}
+            h1{font-size:18px}
+            .note{font-size:11px}
+            .row{gap:14px}
+            .left{width:100%}
+            .preview{padding:8px}
+            .right{padding-left:0}
+            .panel{padding:12px 0;font-size:13px}
+            .panel strong{font-size:10px}
+            pre{font-size:13px;line-height:1.6}
+            a.btn{padding:10px 16px;font-size:11px;width:100%;justify-content:center}
+            .tts-btn{padding:5px 10px;font-size:9px;gap:4px}
+            .edit-btn,.reanalyze-btn{padding:5px 10px;font-size:9px}
+            .extracted-textarea{min-height:80px;font-size:13px}
+            .sources-heading{font-size:10px}
+            .sources-list li{font-size:11px}
+            .sources-list .source-url{font-size:9px}
+            .edition-line{font-size:9px;letter-spacing:3px}
+            .faq-overlay{padding:12px}
+            .faq-modal{padding:18px;max-height:85vh}
+            .faq-header h2{font-size:16px;letter-spacing:2px}
+            .faq-q{font-size:13px;padding:12px 4px}
+            .faq-a p{font-size:12px}
+            .page-footer .footer-logo{font-size:22px}
+        }
         .top-banner{position:fixed;top:0;left:0;right:0;height:auto;background:#111;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:10px 28px;border-bottom:3px double rgba(255,255,255,0.2);box-shadow:none;flex-direction:row}
         :root.light .top-banner{background:#1a1a18;border-bottom:3px double rgba(255,255,255,0.15)}
         .logo{text-decoration:none;transition:all .25s ease;display:flex;flex-direction:column;align-items:flex-start}
@@ -1285,6 +1346,23 @@ body{min-height:100vh;font-family:'Assistant','Segoe UI',sans-serif;background:l
 .back-link{position:fixed;top:16px;left:16px;color:#fff;text-decoration:none;font-weight:700;font-size:14px;background:rgba(0,0,0,0.25);padding:8px 14px;border-radius:6px;backdrop-filter:blur(4px);transition:background .2s}
 .back-link:hover{background:rgba(0,0,0,0.4)}
 .welcome-flag{text-align:center;padding:8px;font-size:11px;color:#8a8fa8;letter-spacing:1px}
+@media (max-width:600px){
+    body{background:linear-gradient(180deg,#0038b8 0%,#0038b8 30%,#fff 30%,#fff 70%,#0038b8 70%,#0038b8 100%)}
+    .chat-container{margin:10px;height:calc(100vh - 20px);border-radius:10px}
+    .chat-header{padding:14px 16px;gap:12px}
+    .chat-avatar{width:42px;height:42px;font-size:20px}
+    .chat-header-text h1{font-size:18px}
+    .chat-header-text p{font-size:11px}
+    .star-of-david{font-size:24px;right:14px}
+    .messages{padding:14px 10px;gap:10px}
+    .msg{max-width:88%;padding:10px 13px;font-size:13px;line-height:1.5}
+    .msg.bot .sender{font-size:9px}
+    .input-area{padding:10px 12px;gap:8px}
+    .input-area input{padding:10px 12px;font-size:14px;border-radius:6px}
+    .input-area button{padding:10px 16px;font-size:13px;border-radius:6px}
+    .back-link{top:auto;bottom:8px;left:50%;transform:translateX(-50%);font-size:12px;padding:6px 12px;border-radius:20px;z-index:10}
+    .welcome-flag{font-size:10px;padding:6px}
+}
 </style>
 </head>
 <body>
